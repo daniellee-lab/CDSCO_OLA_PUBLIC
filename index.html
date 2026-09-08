@@ -51,10 +51,12 @@
     .process-actions .step-complete{display:block;margin:8px 0 0 auto;font-size:11px;padding:6px;white-space:nowrap}
     .edit-form select{width:100%;border:1px solid var(--line);background:white;border-radius:9px;padding:10px}
   </style>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>.brand{flex-wrap:wrap}.brand-logo{display:block;object-fit:contain;background:#fff;border-radius:10px;padding:6px;box-sizing:border-box;flex-shrink:0}</style>
 </head>
 <body>
 <div class="app">
-  <aside><div class="brand"><div class="brandmark">OG</div><div><b>Olacorp global</b><small>CDSCO Desk</small></div></div>
+  <aside><div class="brand"><img class="brand-logo" src="assets/olacorp-logo.svg" alt="Ola corp." width="104" height="76"><div><b>Olacorp global</b><small>CDSCO Desk</small></div></div>
     <div class="role-box"><label>화면 권한 미리보기</label><select id="roleSelect" onchange="setRole(this.value)"><option value="admin">올라 어드민</option><option value="client">업체 계정</option></select></div>
     <nav><button class="active">▦ 프로젝트 현황</button><button class="admin-only">▤ 전체 서류 검토함</button><button>◇ 제품·SKU</button><button>◷ 일정 및 알림</button><button class="admin-only">♙ 업체 계정 관리</button><button class="admin-only">⚙ 관리자 설정</button></nav>
     <div class="aside-foot"><b style="color:white">담당 규제팀</b><br>India Regulatory Affairs<br>Olacorp global 지원팀</div>
