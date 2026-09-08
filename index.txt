@@ -1,0 +1,304 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Olacorp global · CDSCO Desk</title>
+  <meta name="description" content="인도 화장품 CDSCO 등록 서류 수집 및 진행 관리 데모">
+  <style>
+    :root{--ink:#10233f;--navy:#0b1f3a;--blue:#1769e0;--pale:#eef4ff;--line:#dce4ef;--muted:#64748b;--bg:#f5f7fb;--green:#138a5b;--amber:#c8700a;--red:#c84040;--white:#fff;--shadow:0 14px 38px rgba(25,44,75,.08)}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:#16243a;font-family:Pretendard,"Noto Sans KR",Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+    button,input,select,textarea{font:inherit} button{cursor:pointer}.app{display:grid;grid-template-columns:246px 1fr;min-height:100vh}
+    aside{background:var(--navy);color:#dce7f8;padding:26px 18px;position:sticky;top:0;height:100vh}.brand{display:flex;gap:11px;align-items:center;padding:0 8px 26px}.brandmark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#2e83ff,#75b1ff);display:grid;place-items:center;font-weight:900;color:white}.brand b{display:block;color:white;font-size:17px}.brand small{color:#90a6c4}
+    nav button{width:100%;border:0;background:transparent;color:#b8c7db;text-align:left;padding:12px 13px;border-radius:10px;margin:3px 0;display:flex;gap:10px;align-items:center}nav button.active,nav button:hover{background:#173454;color:white}.aside-foot{position:absolute;bottom:22px;left:18px;right:18px;padding:14px;background:#132d4c;border-radius:12px;color:#abc0da;font-size:12px}.role-box{margin:4px 5px 20px;padding:10px;background:#102d4d;border-radius:10px}.role-box label{display:block;font-size:11px;color:#8ea8c8;margin-bottom:5px}.role-box select{width:100%;background:#0b1f3a;color:white;border:1px solid #35516f;border-radius:7px;padding:7px}
+    main{min-width:0}.topbar{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:4}.crumb{font-weight:750;color:var(--ink)}.user{display:flex;gap:12px;align-items:center}.avatar{width:34px;height:34px;border-radius:50%;background:#e5edfa;color:var(--blue);display:grid;place-items:center;font-weight:800}
+    .content{padding:28px 30px 48px;max-width:1480px;margin:auto}.headline{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:24px}.headline h1{font-size:28px;margin:0 0 5px;color:var(--ink);letter-spacing:-.03em}.headline p{margin:0;color:var(--muted)}
+    .primary,.secondary,.ghost{border-radius:9px;padding:10px 15px;border:1px solid transparent;font-weight:700}.primary{background:var(--blue);color:white}.secondary{background:white;border-color:var(--line);color:var(--ink)}.ghost{background:transparent;color:var(--blue);padding:7px 8px}
+    .steps{display:grid;grid-template-columns:repeat(6,1fr);background:white;border:1px solid var(--line);border-radius:14px;padding:17px 18px;margin-bottom:22px;box-shadow:var(--shadow)}.step{position:relative;text-align:center;color:#7a8799;font-size:12px}.step:before{content:"";position:absolute;left:-50%;right:50%;top:13px;height:2px;background:#dce5f1}.step:first-child:before{display:none}.dot{position:relative;z-index:1;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;margin:0 auto 7px;background:#e8edf4;color:#8290a4;font-weight:800}.step.done .dot{background:var(--green);color:white}.step.done:before,.step.current:before{background:var(--green)}.step.current .dot{background:var(--blue);color:white;box-shadow:0 0 0 5px #e7f0ff}.step.current{color:var(--blue);font-weight:800}
+    .grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,.8fr);gap:20px}.card{background:white;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.card-head{padding:19px 21px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.card-head h2{font-size:17px;margin:0;color:var(--ink)}.card-body{padding:19px 21px}
+    .project{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.field label{display:block;color:#64748b;font-size:12px;margin-bottom:4px}.field b{font-size:14px}.progress-row{display:flex;justify-content:space-between;margin:20px 0 7px}.bar{height:8px;background:#e9eef5;border-radius:9px;overflow:hidden}.bar span{display:block;width:58%;height:100%;background:linear-gradient(90deg,#1769e0,#52a1ff)}
+    .section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 11px}.section-title h3{margin:0;font-size:15px;color:var(--ink)}.pill{padding:4px 9px;border-radius:100px;font-size:12px;font-weight:750}.pill.blue{color:#1769e0;background:#e9f1ff}.pill.green{color:#08764b;background:#e3f7ed}.pill.amber{color:#a75a06;background:#fff0d8}.pill.gray{color:#64748b;background:#edf1f5}.pill.red{color:#b42b2b;background:#fee9e9}
+    .doc{border:1px solid var(--line);border-radius:11px;margin:8px 0;overflow:hidden}.doc-row{display:grid;grid-template-columns:32px 1fr auto;gap:11px;align-items:center;padding:13px 14px}.doc-icon{width:30px;height:30px;border-radius:8px;background:#eef4ff;color:var(--blue);display:grid;place-items:center;font-weight:800}.doc-name b{display:block;font-size:14px}.doc-name small{color:var(--muted)}.doc-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.upload{display:none}.upload-label,.file-btn{border:1px solid #b9c7d9;background:white;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:700;color:#33465f;cursor:pointer}.file-btn.view{color:var(--blue);border-color:#aac8f3;background:#f4f8ff}.doc-note{padding:11px 14px;background:#fff8ec;border-top:1px solid #f0d9b4;color:#8b570f;font-size:13px}.comment-form{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line);background:#fafcff}.comment-form input{min-width:0;flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 10px}.comment-form button{border:0;background:var(--navy);color:white;border-radius:8px;padding:7px 11px;font-weight:700}.company-list{display:grid;grid-template-columns:1.4fr .7fr .7fr auto;align-items:center}.company-list>div{padding:12px;border-bottom:1px solid var(--line)}.company-list .header{color:var(--muted);font-size:12px;font-weight:700}.company-list b{color:var(--ink)}
+    .modal{position:fixed;inset:0;background:rgba(7,20,39,.62);z-index:20;display:grid;place-items:center;padding:22px}.modal-card{background:white;width:min(880px,100%);height:min(720px,92vh);border-radius:15px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}.modal-card.form-modal{height:auto;max-height:92vh}.modal-head{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px}.modal-head h3{margin:0;font-size:16px}.modal-tools{display:flex;gap:8px}.preview{background:#eef2f7;min-height:0;display:grid;place-items:center}.preview iframe,.preview img{border:0;width:100%;height:100%;object-fit:contain;background:white}.preview-empty{text-align:center;max-width:440px;color:var(--muted);padding:30px}.preview-empty .big{font-size:46px;display:block;margin-bottom:10px}.close{border:0;background:#edf1f5;border-radius:8px;padding:7px 10px;font-weight:800}.edit-form{padding:20px;overflow:auto}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.edit-form label{display:block;font-size:12px;font-weight:750;color:#5f6f84;margin-bottom:5px}.edit-form input,.edit-form textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px}.edit-form textarea{min-height:90px}.form-full{grid-column:1/-1}.audit{background:#f2f6fb;border-radius:9px;padding:10px 12px;color:#607087;font-size:12px;margin-top:15px}.owner-tag{display:inline-block;margin-top:5px;color:#53657c;font-size:11px}
+    .view-tabs{display:flex;gap:5px;background:#e9eef5;border-radius:11px;padding:4px;margin:0 0 18px;width:max-content}.view-tabs button{border:0;background:transparent;border-radius:8px;padding:9px 14px;color:#5d6b7e;font-weight:750}.view-tabs button.active{background:white;color:var(--blue);box-shadow:0 2px 8px rgba(20,40,70,.08)}.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}.kpi{background:white;border:1px solid var(--line);border-radius:12px;padding:15px}.kpi small{color:var(--muted);display:block}.kpi strong{display:block;font-size:23px;color:var(--ink);margin-top:5px}.kpi.attention{border-color:#f1cd9b;background:#fffaf1}.kpi.danger{border-color:#efbcbc;background:#fff7f7}.blockers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}.blocker{border-radius:11px;padding:13px 14px;background:white;border:1px solid var(--line)}.blocker b{display:block;margin-bottom:3px}.blocker small{color:var(--muted)}.table-tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.table-tools input,.table-tools select{border:1px solid var(--line);background:white;border-radius:8px;padding:8px 10px}.table-wrap{overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:1450px}.data-table th{position:sticky;top:0;background:#f7f9fc;color:#5e6d81;font-size:12px;text-align:left;padding:11px;border-bottom:1px solid var(--line)}.data-table td{padding:12px 11px;border-bottom:1px solid #edf1f5;vertical-align:top;font-size:13px}.data-table .product{max-width:330px}.check{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:6px;font-weight:800}.check.yes{background:#e3f7ed;color:#08764b}.check.no{background:#fee9e9;color:#b42b2b}.maker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.maker-card{border:1px solid var(--line);border-radius:12px;padding:15px}.maker-card h3{font-size:14px;margin:0 0 10px;color:var(--ink)}.maker-docs{display:flex;gap:7px;flex-wrap:wrap}.source-note{padding:12px 15px;border-radius:10px;background:#f1f5fa;color:#52647b;font-size:13px;margin-bottom:16px}
+    .timeline{position:relative;padding-left:17px}.event{position:relative;padding:0 0 20px 20px;border-left:1px solid #dce5ef}.event:last-child{border:0}.event:before{content:"";position:absolute;left:-5px;top:2px;width:9px;height:9px;border-radius:50%;background:#b6c2d2}.event:first-child:before{background:var(--blue);box-shadow:0 0 0 4px #e7f0ff}.event b{display:block;font-size:13px}.event p{margin:3px 0;color:var(--muted);font-size:12px}.comment{background:#f4f7fb;border-radius:10px;padding:12px;margin-top:9px}.comment strong{color:var(--blue)}
+    textarea{width:100%;min-height:80px;border:1px solid var(--line);border-radius:9px;padding:10px;resize:vertical}.sendrow{display:flex;justify-content:flex-end;margin-top:8px}.fee{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px}.fee .total{border-top:1px solid var(--line);padding-top:10px;margin-top:4px;font-weight:900;color:var(--ink)}
+    .notice{margin-top:18px;background:#eef4ff;border:1px solid #d4e3ff;padding:14px 16px;border-radius:11px;color:#31547d;font-size:13px}.hidden{display:none!important}.toast{position:fixed;right:24px;bottom:24px;background:#10233f;color:white;padding:12px 16px;border-radius:10px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.25s;z-index:10}.toast.show{opacity:1;transform:none}
+    .process-list{padding:5px 20px 20px}.process-phase{margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden}.phase-title{background:#f5f8fc;padding:11px 14px;display:flex;justify-content:space-between;align-items:center}.phase-title b{color:var(--ink)}.process-row{display:grid;grid-template-columns:42px minmax(260px,1.5fr) .55fr .55fr 110px;gap:10px;align-items:center;padding:13px 14px;border-top:1px solid #edf1f5}.process-no{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#e8eef7;color:#5f7188;font-weight:800}.process-row.done .process-no{background:var(--green);color:white}.process-row.current{background:#f6f9ff}.process-row.current .process-no{background:var(--blue);color:white}.process-task b{display:block;font-size:14px}.process-task small{color:var(--muted)}.owner{font-size:12px;font-weight:750;color:#40536c}.due{font-size:12px;color:#64748b}.process-actions{text-align:right}.phase-progress{font-size:12px;color:#607087}.duration{display:flex;gap:34px;align-items:center;background:#112b49;color:white;border-radius:12px;padding:16px 18px;margin-bottom:15px}.duration strong{font-size:25px}.duration span{color:#bfd0e5}.gate{margin-top:12px;padding:10px 12px;background:#fff7e9;border-radius:9px;color:#955a0d;font-size:12px}.phase-docs{border-top:1px solid var(--line);background:#f9fbfe;padding:5px 15px 16px}.phase-docs .section-title{margin-top:15px}.phase-docs .doc{background:white}.phase-docs-title{padding:13px 14px 3px;color:#40536c;font-weight:800}.next-gate{padding:12px 14px;background:#f1f4f8;border-radius:9px;color:#65758a;margin-top:13px;font-size:13px}
+    @media(max-width:980px){.app{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}.steps{overflow:auto;grid-template-columns:repeat(5,150px)}.topbar,.content{padding-left:18px;padding-right:18px}.project{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:repeat(3,1fr)}.blockers{grid-template-columns:1fr}.maker-grid{grid-template-columns:1fr}.process-row{grid-template-columns:36px 1fr auto}.process-row .owner,.process-row .due{display:none}.duration{align-items:flex-start;flex-direction:column;gap:10px}}
+    @media(max-width:600px){.headline{align-items:flex-start;flex-direction:column}.project{grid-template-columns:1fr}.doc-row{grid-template-columns:32px 1fr}.doc-actions{grid-column:2;justify-content:flex-start}.content{padding-top:20px}.topbar{height:62px}.topbar small{display:none}.company-list{grid-template-columns:1fr auto}.company-list .optional{display:none}}
+
+    /* OLA-inspired workspace: deep ocean, sky blue, generous typography. */
+    :root{--ink:#08222f;--navy:#08222f;--blue:#287cab;--pale:#edf5fa;--line:#e0e7ea;--muted:#73828a;--bg:#f5f7f8;--shadow:0 5px 24px rgba(8,34,47,.025)}
+    body{color:#263c47;letter-spacing:-.025em}.app{grid-template-columns:232px minmax(0,1fr)}
+    aside{background:#08222f;padding:34px 18px}.brand{padding:0 8px 38px;gap:10px}.brandmark{background:#b4dbef;color:#08222f;border-radius:50% 50% 50% 12%;width:39px;height:39px;font-size:13px}.brand b{font-size:17px;letter-spacing:-.04em}.brand small{font-size:10px;letter-spacing:.18em;color:#93b2c2;text-transform:uppercase}
+    .role-box{margin:0 4px 28px;padding:13px;background:#14313f;border:1px solid #284552;border-radius:10px}.role-box label{color:#a8bdc8}.role-box select{background:#14313f;border-color:#37535f;color:#edf5fa}
+    nav button{font-size:13px;padding:14px 13px;margin:5px 0;transition:background .2s,color .2s}nav button.active{background:#c0e1f2;color:#08222f;font-weight:800}nav button:hover{background:#264856;color:white}.aside-foot{background:transparent;border-top:1px solid #34505c;border-radius:0;padding:22px 8px 4px;color:#93aebc;line-height:1.9}
+    .topbar{height:82px;padding:0 40px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px)}.crumb{font-size:12px;font-weight:500;color:#758690}.user{gap:14px;font-size:12px}.avatar{width:38px;height:38px;background:#eaf3f8;color:#08222f}.content{padding:30px 40px 60px;max-width:1600px}
+    .headline{position:relative;isolation:isolate;overflow:hidden;align-items:center;min-height:230px;margin-bottom:30px;padding:38px 36px;background:#ddecf4;border:1px solid #d5e6ee;border-radius:18px;gap:20px}.headline:before,.headline:after{content:'';position:absolute;z-index:-1;pointer-events:none;border:1px solid #b5d5e5;border-radius:50%;width:530px;height:530px;right:-205px;top:-280px}.headline:after{width:390px;height:390px;right:-135px;top:-210px;border-width:40px;border-color:#cee4ef}.headline h1{font-size:clamp(25px,2.7vw,40px);font-weight:750;letter-spacing:-.06em;line-height:1.3;margin-bottom:14px}.headline p{font-size:13px;color:#546f7d;max-width:470px;line-height:1.8}.eyebrow{display:block;font-size:10px;letter-spacing:.2em;font-weight:800;color:#416c83;margin-bottom:18px}.headline>.secondary{flex-shrink:0;background:#08222f;color:white;border-color:#08222f;padding:13px 18px;font-size:12px;border-radius:30px}
+    .card{border-radius:14px;box-shadow:var(--shadow)}.card-head{padding:22px 24px}.card-head h2{font-size:16px;letter-spacing:-.035em}.card-body{padding:22px 24px}.company-list{padding:0 12px 10px}.company-list>div{padding:17px 12px}.company-list small{font-size:11px;color:var(--muted)}.company-list .header{font-size:11px;padding-top:15px;padding-bottom:12px}.company-list>div:nth-last-child(-n+4){border-bottom:0}.company-list b{font-size:13px}.ghost{font-size:12px;color:#287cab}
+    #projectLabel{margin-top:34px;margin-bottom:18px}#projectLabel h3{font-size:16px;letter-spacing:-.04em}.view-tabs{width:100%;gap:25px;background:transparent;border-radius:0;padding:0;border-bottom:1px solid var(--line);margin-bottom:22px}.view-tabs button{border-radius:0;padding:12px 0 15px;color:#7b878f;font-size:13px;border-bottom:2px solid transparent}.view-tabs button.active{background:transparent;color:#08222f;border-bottom-color:#08222f;box-shadow:none}
+    .kpis{gap:0;background:white;border:1px solid var(--line);border-radius:14px;padding:24px 0;margin-bottom:18px;overflow:hidden}.kpi{border:0;border-right:1px solid var(--line);border-radius:0;padding:0 22px;background:transparent}.kpi:last-child{border-right:0}.kpi small{font-size:11px}.kpi strong{font-size:27px;letter-spacing:-.055em;font-weight:650;margin-top:9px}.kpi.danger,.kpi.attention{background:transparent;border-color:var(--line)}.kpi.danger strong{color:#bb5750}.kpi.attention strong{color:#b38336}.blockers{gap:12px;margin-bottom:28px}.blocker{position:relative;padding:16px 18px 16px 22px;background:#edf2f5;border:0;border-radius:9px}.blocker:before{content:'';position:absolute;left:0;top:18px;bottom:18px;width:3px;background:#6ca9d2;border-radius:4px}.blocker:first-child:before{background:#c77770}.blocker:nth-child(2):before{background:#c5a060}.blocker b{font-size:12px}.blocker small{font-size:11px;line-height:1.7;display:block}
+    .steps{padding:25px 20px;box-shadow:none;margin-bottom:24px}.dot{width:29px;height:29px;margin-bottom:10px}.step:before{top:14px}.step.current .dot{background:#08222f;box-shadow:0 0 0 5px #e2f0f7}.step.current{color:#08222f}.step.done .dot{background:#6ca9d2}.step.done:before,.step.current:before{background:#a6cddd}.grid{grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr);gap:22px}.bar{height:6px}.bar span{background:linear-gradient(90deg,#287cab,#9acbe5)}.pill{font-size:10px;padding:5px 10px;white-space:nowrap}.pill.blue{background:#e9f3f9;color:#287cab}.notice{background:#eef5f8;border-color:#dce9ef;color:#557481;font-size:12px;line-height:1.8}.duration{background:#08222f;padding:26px 28px;gap:50px;border-radius:14px;margin-bottom:24px}.duration span{color:#a3bfce;font-size:11px}.duration strong{font-size:28px}.duration b{font-size:13px}.phase-title{background:#f0f5f7;padding:16px}.phase-title b{font-size:13px}.process-row{grid-template-columns:36px minmax(0,1.5fr) .55fr .55fr 85px;padding:17px 16px}.process-task b{font-size:13px}.process-task small{font-size:11px}.phase-docs{background:#f7f9fa}.primary{background:#08222f}.primary,.secondary,.file-btn,.upload-label{transition:background .2s,transform .2s}.primary:hover,.headline>.secondary:hover{background:#234957}.secondary:hover,.file-btn:hover,.upload-label:hover{background:#e8f2f7}.primary:active,.secondary:active{transform:translateY(1px)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.upload-label:focus-within{outline:3px solid #6ca9d2;outline-offset:3px}.doc-name,.process-task{min-width:0;overflow-wrap:anywhere}.doc-name b{font-size:12px}.doc-name small{font-size:11px}.data-table th{background:#edf3f6}.data-table tr:hover td{background:#f7fafc}.workspace-footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:38px;padding-top:20px;color:#8a989f;font-size:10px;letter-spacing:.06em}
+    @media(min-width:1600px){.headline{min-height:255px}.headline h1{font-size:43px}}
+    @media(max-width:1100px){.app{grid-template-columns:200px minmax(0,1fr)}.content{padding:24px}.topbar{padding:0 24px}.headline{padding:30px;align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.kpi{padding:0 13px}.kpi strong{font-size:23px}}
+    @media(max-width:980px){.app{display:block}.app>aside{display:block;position:relative;height:auto;padding:18px 22px}.brand{padding:0}.role-box{position:absolute;right:22px;top:15px;margin:0;padding:5px 10px;width:145px}.role-box label{display:none}.role-box select{padding:5px;font-size:12px}.app>aside nav{display:flex;overflow-x:auto;gap:8px;margin-top:20px}.app>aside nav button{width:auto;white-space:nowrap;padding:9px 12px;font-size:12px}.aside-foot{display:none}.topbar{position:relative;height:65px}.kpis{grid-template-columns:repeat(3,1fr);row-gap:22px}.kpi:nth-child(3){border-right:0}.blockers{grid-template-columns:1fr}.steps{overflow:auto}.step{min-width:115px}.process-row{grid-template-columns:36px minmax(0,1fr) 75px}.process-row .owner,.process-row .due{display:none}.duration{flex-direction:row;flex-wrap:wrap;gap:24px}.project{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:600px){.content{padding:18px 16px 35px}.topbar{padding:0 18px}.crumb{font-size:10px;max-width:65%}.headline{padding:28px 24px;min-height:250px;border-radius:12px;margin-bottom:22px}.headline h1{font-size:29px;max-width:270px}.headline p{font-size:12px}.headline>.secondary{padding:10px 16px}.eyebrow{font-size:9px;margin-bottom:15px}.card-head{padding:18px 16px;gap:12px;flex-wrap:wrap}.card-body{padding:18px 16px}.company-list{padding:0 4px 6px}.company-list>div{padding:13px 12px}.view-tabs{gap:22px;overflow:auto;white-space:nowrap}.view-tabs button{font-size:12px}.project{grid-template-columns:1fr}.kpi strong{font-size:24px}.kpi small{font-size:10px}#projectLabel{align-items:flex-start;gap:12px}#projectLabel h3{font-size:13px}.process-list{padding:0 10px 12px}.process-row{grid-template-columns:27px minmax(0,1fr) 58px;gap:8px;padding:15px 10px}.process-no{width:25px;height:25px;font-size:11px}.process-task b{font-size:12px}.process-actions .pill{font-size:9px;padding:4px 6px}.phase-docs{padding:5px 8px 12px}.phase-title{padding:13px 10px;gap:8px}.phase-title b{font-size:12px}.phase-progress{font-size:10px}.duration{padding:22px}.form-grid{grid-template-columns:1fr}.modal{padding:12px}.modal-head{flex-wrap:wrap}.workspace-footer{gap:12px;flex-wrap:wrap}.table-tools{width:100%}.table-tools input{width:100%}.doc-actions{gap:6px}.brand b{font-size:15px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+    .phase-control{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid var(--line)}.phase-control small{color:var(--muted);font-size:12px}.phase-control button{font-size:12px}.phase-control button:disabled{opacity:.45;cursor:not-allowed}.process-phase{scroll-margin-top:100px}
+    .process-actions .step-complete{display:block;margin:8px 0 0 auto;font-size:11px;padding:6px;white-space:nowrap}
+    .edit-form select{width:100%;border:1px solid var(--line);background:white;border-radius:9px;padding:10px}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside><div class="brand"><div class="brandmark">OG</div><div><b>Olacorp global</b><small>CDSCO Desk</small></div></div>
+    <div class="role-box"><label>화면 권한 미리보기</label><select id="roleSelect" onchange="setRole(this.value)"><option value="admin">올라 어드민</option><option value="client">업체 계정</option></select></div>
+    <nav><button class="active">▦ 프로젝트 현황</button><button class="admin-only">▤ 전체 서류 검토함</button><button>◇ 제품·SKU</button><button>◷ 일정 및 알림</button><button class="admin-only">♙ 업체 계정 관리</button><button class="admin-only">⚙ 관리자 설정</button></nav>
+    <div class="aside-foot"><b style="color:white">담당 규제팀</b><br>India Regulatory Affairs<br>Olacorp global 지원팀</div>
+  </aside>
+  <main><header class="topbar"><div class="crumb" id="crumb">전체 업체 / CDSCO 프로젝트 관리</div><div class="user"><div><b id="userName">이경원</b><br><small id="userRole" style="color:#718096">올라 관리자 · 전체 권한</small></div><div class="avatar" id="avatar">이</div></div></header>
+  <div class="content">
+    <div class="headline"><div><span class="eyebrow">YOUR GLOBAL BEAUTY PARTNER</span><h1 id="pageTitle">CDSCO 프로젝트 통합 관리</h1><p id="pageSub">올라 어드민 전용 · 전체 업체의 제출·보완·심사 현황 관리</p></div><button class="secondary" onclick="downloadSummary()">진행현황 다운로드</button></div>
+    <div class="card admin-only" id="companyPanel" style="margin-bottom:22px"><div class="card-head"><h2>업체별 진행 현황</h2><span class="pill blue">3개 업체 · 4개 프로젝트</span></div><div class="company-list"><div class="header">업체 / 프로젝트</div><div class="header optional">현재 단계</div><div class="header optional">준비도</div><div></div><div><b>Ola Beauty Co., Ltd.</b><br><small>Glow Serum India Registration</small></div><div class="optional"><span class="pill amber">제품서류</span></div><div class="optional"><b>58%</b></div><div><button class="ghost" onclick="openProject('Ola Beauty Co., Ltd.')">열기</button></div><div><b>Cosmelab Co., Ltd.</b><br><small>Hair Tattoo 3 SKU</small></div><div class="optional"><span class="pill blue">라벨 검토</span></div><div class="optional"><b>74%</b></div><div><button class="ghost" onclick="toast('코스메랩 프로젝트 데모')">열기</button></div><div><b>Example K-Beauty</b><br><small>Skincare 8 Variants</small></div><div class="optional"><span class="pill gray">기초정보</span></div><div class="optional"><b>21%</b></div><div><button class="ghost" onclick="toast('Example K-Beauty 프로젝트 데모')">열기</button></div></div></div>
+    <div id="projectLabel" class="section-title"><h3>선택 프로젝트 · SOMEBYMI CDSCO Registration (50 SKU)</h3><span class="pill green">SOME BY MI</span></div>
+    <div class="view-tabs"><button class="active" onclick="switchView('overview',this)">프로젝트 현황</button><button onclick="switchView('sku',this)">SKU 및 제품서류</button><button onclick="switchView('maker',this)">제조사 공통서류</button><button onclick="switchView('activity',this)">활동·보완이력</button></div>
+    <div class="kpis"><div class="kpi"><small>등록 대상</small><strong>50 SKU</strong></div><div class="kpi"><small>Artwork</small><strong>48 / 50</strong></div><div class="kpi"><small>COA</small><strong>50 / 50</strong></div><div class="kpi"><small>Ingredient List</small><strong>50 / 50</strong></div><div class="kpi danger"><small>CFS</small><strong>0 / 50</strong></div><div class="kpi attention"><small>구버전 재고</small><strong>11 SKU</strong></div></div>
+    <div class="blockers"><div class="blocker"><b style="color:var(--red)">최우선 병목 · CFS 미수령</b><small>50개 제품 전체가 미완료. 제조사별 CFS 요청·수령일 관리 필요</small></div><div class="blocker"><b style="color:var(--amber)">Artwork 미완료 · 2개</b><small>Daily Mask 및 Serum Mask 관련 파일 확인 필요</small></div><div class="blocker"><b style="color:var(--blue)">데이터 정합성 점검</b><small>제조사 영문명 표기와 KIT 구성품 매핑 표준화 필요</small></div></div>
+    <div id="overviewView">
+    <div class="steps" id="phaseSteps" style="grid-template-columns:repeat(5,1fr)">
+      <div class="step done"><div class="dot">✓</div>① 범위·비용 확정</div><div class="step current"><div class="dot">2</div>② 서류 취합·검토</div><div class="step"><div class="dot">3</div>③ LOA·아포스티유</div><div class="step"><div class="dot">4</div>④ 접수·Query·결제</div><div class="step"><div class="dot">5</div>⑤ 인허가 완료</div>
+    </div>
+    <div class="grid">
+      <section>
+        <div class="card"><div class="card-head"><h2>프로젝트 개요</h2><span class="pill blue">고객 서류 제출 중</span></div><div class="card-body">
+          <div class="project"><div class="field"><label>브랜드 / 제조사</label><b>SOME BY MI / 8개 제조사</b></div><div class="field"><label>인도 Authorized Agent</label><b>Olacorp global</b></div><div class="field"><label>등록 대상</label><b>50개 Item / 복수 SKU</b></div></div>
+          <div class="progress-row"><b>전체 준비도</b><b id="progressText">58%</b></div><div class="bar"><span id="progressBar"></span></div>
+          <div class="notice">현재 단계 완료 조건: 필수 제품서류 5종이 모두 제출되고 내부 검토가 승인되어야 다음 단계로 이동할 수 있음.</div>
+        </div></div>
+        <div class="notice" style="margin-top:18px">세부 제출서류와 검토상태는 아래 <b>전체 진행절차 → 2. 서류 취합 및 검토</b>에서 관리합니다.</div>
+      </section>
+      <aside-right>
+        <div class="card"><div class="card-head"><h2>최근 활동</h2></div><div class="card-body timeline" id="activityTimeline">
+          <div class="event"><b>성분표 보완 요청</b><p>오늘 14:20 · Olacorp global 규제팀</p><div class="comment"><strong>보완 사유</strong><br>INCI명과 함량(%)을 함께 표기하고 제조사 권한자의 서명·직인을 포함해 주세요.</div></div>
+          <div class="event"><b>Free Sale Certificate 승인</b><p>9월 5일 · 심사 완료</p></div><div class="event"><b>제조사 위임장 승인</b><p>9월 3일 · Apostille 확인</p></div>
+        </div></div>
+        <div class="card" style="margin-top:18px"><div class="card-head"><h2>메시지</h2><span class="pill blue">담당자 공유</span></div><div class="card-body"><textarea id="message" placeholder="고객사 또는 인도 규제팀에 남길 메시지"></textarea><div class="sendrow"><button class="primary" onclick="sendMessage()">메시지 등록</button></div></div></div>
+        <div class="card" style="margin-top:18px"><div class="card-head"><h2>예상 수수료</h2></div><div class="card-body fee"><span>CDSCO 정부 수수료</span><b>USD 1,850</b><span>핸들링 Fee (5%)</span><b>USD 92.50</b><span class="total">예상 합계</span><b class="total">USD 1,942.50</b><small style="grid-column:1/-1;color:#718096">핸들링 Fee는 정부 수수료의 5%로 계산. 실제 정부 수수료 확정 시 최종 정산.</small></div></div>
+      </aside-right>
+    </div><div class="duration" style="margin-top:20px"><div><span>전체 예상기간</span><br><strong>약 4–5개월</strong></div><div><span>현재 단계</span><br><b id="currentPhaseText">서류 취합 및 상호 일치 검토</b></div><div><span>다음 핵심 액션</span><br><b id="nextActionText">CFS 수령 및 LOA 준비 요청</b></div></div><div class="card"><div class="card-head"><h2>전체 진행절차</h2><span class="pill blue">15단계 표준 프로세스</span></div><div class="process-list" id="processList"></div></div></div>
+    <div id="skuView" class="hidden"><div class="card"><div class="card-head"><h2>SKU별 서류 및 고객사 입력정보</h2><div class="table-tools"><input id="skuSearch" placeholder="제품명·라인·제조사 검색" oninput="renderSkuTable()"><select id="skuFilter" onchange="renderSkuTable()"><option value="all">전체 상태</option><option value="blocked">미완료만</option><option value="art">Artwork 미완료</option><option value="cfs">CFS 미완료</option></select></div></div><div class="source-note"><b>고객사 입력 영역:</b> 라인, 제품명, 용량/SKU, 제조사명, Brand Recommendation, 특이사항 및 서류 완료 상태. 업체 계정은 자기 프로젝트 데이터만 수정·열람하며, 올라 어드민은 전 업체 데이터를 통합 열람·수정합니다.</div><div class="table-wrap"><table class="data-table"><thead><tr><th>No.</th><th>라인</th><th>제품명 / SKU</th><th>제조사명(한글)</th><th>Manufacturer Name</th><th>Brand Recommendation</th><th>Artwork</th><th>COA</th><th>성분표</th><th>CFS</th><th>특이사항</th><th>입력정보</th></tr></thead><tbody id="skuTableBody"></tbody></table></div></div></div>
+    <div id="makerView" class="hidden"><div class="card"><div class="card-head"><h2>제조사별 공통서류</h2><span class="pill green">8개 제조사</span></div><div class="card-body"><div class="source-note">CGMP·ISO·Manufacturer Authorization처럼 여러 SKU에 공통 적용되는 서류는 SKU마다 반복 업로드하지 않고 제조사에 한 번 등록한 뒤 관련 제품에 자동 연결하는 구조입니다.</div><div class="maker-grid" id="makerGrid"></div></div></div></div>
+    <div id="activityView" class="hidden"><div class="grid"><section><div class="card"><div class="card-head"><h2>전체 활동·보완이력</h2><div class="table-tools"><select><option>전체 유형</option><option>보완요청</option><option>서류 업로드</option><option>승인</option><option>정부결제</option></select></div></div><div class="card-body timeline" id="activityHistory"><div class="event"><b>성분표 보완 요청</b><p>오늘 14:20 · 올라 관리자 → SOME BY MI</p><div class="comment"><strong>보완 사유</strong><br>INCI명과 함량(%)을 함께 표기하고 제조사 권한자의 서명·직인을 포함해 주세요.</div></div><div class="event"><b>Free Sale Certificate 승인</b><p>9월 5일 · 올라 관리자</p></div><div class="event"><b>제조사 위임장 승인</b><p>9월 3일 · 올라 관리자</p></div></div></div></section><aside-right><div class="card"><div class="card-head"><h2>새 메시지</h2></div><div class="card-body"><textarea id="activityMessage" placeholder="고객사 또는 인도 담당자에게 전달할 내용"></textarea><div class="sendrow"><button class="primary" onclick="sendActivityMessage()">이력 등록</button></div></div></div></aside-right></div></div>
+    <footer class="workspace-footer"><span>Olacorp global · CDSCO DESK</span><span>함께 준비하는 브랜드의 다음 가능성</span></footer>
+  </div></main>
+</div><div class="toast" id="toast"></div>
+<div class="modal hidden" id="fileModal" onclick="if(event.target===this)closePreview()"><div class="modal-card"><div class="modal-head"><div><h3 id="previewTitle">문서 미리보기</h3><small id="previewMeta" style="color:#718096"></small></div><div class="modal-tools"><button class="secondary" id="modalDownload" onclick="downloadCurrent()">다운로드</button><button class="close" onclick="closePreview()">닫기</button></div></div><div class="preview" id="previewBody"></div></div></div>
+<div class="modal hidden" id="skuEditModal" onclick="if(event.target===this)closeSkuEdit()"><div class="modal-card form-modal"><div class="modal-head"><div><h3 id="skuEditTitle">SKU 고객사 입력정보</h3><small style="color:#718096">제품 정보와 서류 상태를 직접 수정합니다.</small></div><button class="close" onclick="closeSkuEdit()">닫기</button></div><div class="edit-form"><div class="form-grid"><div><label for="editLine">라인</label><input id="editLine"></div><div><label for="editName">제품명 *</label><input id="editName" required></div><div class="form-full"><label for="editSku">용량 / SKU *</label><input id="editSku" required></div><div><label for="editArt">Artwork</label><select id="editArt"><option value="0">미완료</option><option value="1">완료</option></select></div><div><label for="editCoa">COA</label><select id="editCoa"><option value="0">미완료</option><option value="1">완료</option></select></div><div><label for="editIng">성분표</label><select id="editIng"><option value="0">미완료</option><option value="1">완료</option></select></div><div><label for="editCfs">CFS</label><select id="editCfs"><option value="0">미완료</option><option value="1">완료</option></select></div><div><label>제조사명 (한글)</label><input id="editMakerKr"></div><div><label>Manufacturer Name (영문)</label><input id="editMakerEn"></div><div class="form-full"><label>Brand Recommendation</label><input id="editRecommendation" placeholder="브랜드 추천 제조사 또는 요청사항"></div><div class="form-full"><label>특이사항</label><textarea id="editNote" placeholder="제조사 변경, 일원화 진행, 구버전 재고 등"></textarea></div></div><div class="audit" id="skuAudit">최종 수정 이력이 표시됩니다.</div><div class="sendrow"><button class="primary" id="skuSaveButton" onclick="saveSkuEdit()">변경사항 저장</button></div></div></div></div>
+<script>
+const docsA=[
+ {name:'Manufacturer Authorization',desc:'First Schedule · 공동서명·직인·Apostille 포함',status:'approved',file:'Authorization_Apostilled.pdf'},
+ {name:'Free Sale Certificate',desc:'판매국 및 전체 제품 목록·발급기관 서명 확인',status:'approved',file:'FSC_Korea_2026.pdf'}];
+const docsB=[
+ {name:'Ingredient / Composition List',desc:'INCI명·함량(%)·제조사 서명 및 직인',status:'needs',file:'Ingredient_List_v1.xlsx',note:'함량(%) 누락 및 서명본 필요'},
+ {name:'Specification & Test Method',desc:'제품 규격 및 시험방법 · 권한자 서명',status:'submitted',file:'Specification.pdf'},
+ {name:'Manufacturing Licence / Marketing Authorization',desc:'원산국 규제기관 발급 인증 사본 또는 미발급 확인서',status:'missing'},
+ {name:'Non-Animal Testing Declaration',desc:'2014-11-12 이후 동물실험 미실시 제조사 확인서',status:'missing'},
+ {name:'Heavy Metals & Hexachlorophene Declaration',desc:'Pb·As·Hg·기타 중금속·미생물 결과 또는 준수 확인서',status:'missing'}];
+const labels={approved:['승인','green'],submitted:['검토 중','blue'],needs:['보완 필요','red'],missing:['미제출','gray']};
+let currentRole='admin';
+let currentPreview=null;
+function render(target,items){document.getElementById(target).innerHTML=items.map((d,i)=>`<div class="doc ${d.status==='needs'?'needs':''}"><div class="doc-row"><div class="doc-icon">${d.file?'✓':'↑'}</div><div class="doc-name"><b>${d.name}</b><small>${escapeHtml(d.file||d.desc)}${d.size?' · '+formatBytes(d.size):''}</small></div><div class="doc-actions"><span class="pill ${labels[d.status][1]}">${labels[d.status][0]}</span>${d.file?`<button class="file-btn view" onclick="viewDocument('${target}',${i})">보기</button><button class="file-btn" onclick="downloadDocument('${target}',${i})">다운로드</button>`:''}<button type="button" class="upload-label" onclick="document.getElementById('${target+i}').click()">${d.file?'파일 교체 업로드':'파일 업로드'}</button><input class="upload" id="${target+i}" type="file" accept=".pdf,.xlsx,.xls,.doc,.docx,.jpg,.jpeg,.png" aria-label="${escapeHtml(d.name)} 업로드" onchange="uploadFile('${target}',${i},this)"></div></div>${d.note?`<div class="doc-note">⚠ <b>올라 검토의견</b> · ${escapeHtml(d.note)}</div>`:''}${currentRole==='admin'?`<div class="comment-form"><input id="comment-${target}-${i}" value="${escapeHtml(d.note||'')}" placeholder="보완 사유 또는 검토 코멘트 입력"><button onclick="saveDocComment('${target}',${i})">코멘트 저장</button></div>`:''}</div>`).join('')}
+function saveDocComment(group,i){const arr=group==='docsA'?docsA:docsB;const input=document.getElementById(`comment-${group}-${i}`);const comment=input.value.trim();if(!comment)return toast('코멘트를 입력해 주세요.');arr[i].note=comment;arr[i].status='needs';const history=document.createElement('div');history.className='event';history.innerHTML=`<b>${arr[i].name} 보완 코멘트</b><p>방금 전 · 올라 관리자</p><div class="comment"><strong>업체 전달사항</strong><br>${escapeHtml(comment)}</div>`;document.getElementById('activityTimeline').prepend(history);document.getElementById('activityHistory').prepend(history.cloneNode(true));render(group,arr);updateProgress();toast('보완 코멘트가 업체 화면과 활동 이력에 등록되었습니다.')}
+function escapeHtml(value){return value.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function setRole(role){closeSkuEdit();currentRole=role;const admin=role==='admin';document.querySelectorAll('.admin-only').forEach(el=>el.classList.toggle('hidden',!admin));document.getElementById('userName').textContent=admin?'이경원':'SOME BY MI 담당자';document.getElementById('userRole').textContent=admin?'올라 관리자 · 전체 권한':'업체 계정 · 자사 프로젝트만';document.getElementById('avatar').textContent=admin?'이':'S';document.getElementById('crumb').textContent=admin?'전체 업체 / CDSCO 프로젝트 관리':'내 프로젝트 / CDSCO 진행 현황';document.getElementById('pageTitle').textContent=admin?'CDSCO 프로젝트 통합 관리':'SOMEBYMI CDSCO Registration';document.getElementById('pageSub').textContent=admin?'올라 어드민 전용 · 전체 업체의 제출·보완·심사 현황 관리':'SOME BY MI · 50SKU 등록 프로젝트 · 본 프로젝트만 열람 가능';document.getElementById('projectLabel').classList.toggle('hidden',!admin);render('docsA',docsA);render('docsB',docsB);renderProcess();renderSkuTable();renderMakers();toast(admin?'올라 어드민 화면으로 전환':'업체 전용 화면으로 전환')}
+function openProject(name){toast(name+' 프로젝트를 열었습니다.')}
+function uploadFile(group,i,input){const file=input.files[0];if(!file)return;const arr=group==='docsA'?docsA:docsB;if(arr[i].blobUrl)URL.revokeObjectURL(arr[i].blobUrl);arr[i].file=file.name;arr[i].size=file.size;arr[i].type=file.type;arr[i].blobUrl=URL.createObjectURL(file);arr[i].dataUrl='';arr[i].status='submitted';arr[i].note='';const ext=file.name.split('.').pop().toLowerCase();if(file.type.startsWith('image/')||['jpg','jpeg','png','webp','gif'].includes(ext)){const reader=new FileReader();reader.onload=()=>{arr[i].dataUrl=reader.result;render(group,arr);toast(file.name+' 이미지 미리보기 준비 완료')};reader.onerror=()=>toast('이미지를 읽지 못했습니다. 다시 업로드해 주세요.');reader.readAsDataURL(file)}render(group,arr);updateProgress();toast(file.name+' 제출 완료 · 보기 및 다운로드 가능')}
+function getDoc(group,i){return (group==='docsA'?docsA:docsB)[i]}
+function viewDocument(group,i){const d=getDoc(group,i);currentPreview=d;document.getElementById('previewTitle').textContent=d.file;document.getElementById('previewMeta').textContent=d.name+(d.size?' · '+formatBytes(d.size):' · 등록 서류');const body=document.getElementById('previewBody');const ext=d.file.split('.').pop().toLowerCase();const isImage=(d.type&&d.type.startsWith('image/'))||['jpg','jpeg','png','webp','gif'].includes(ext);if(isImage&&(d.dataUrl||d.blobUrl)){const src=d.dataUrl||d.blobUrl;body.innerHTML=`<img src="${src}" alt="${escapeHtml(d.file)}" onerror="this.parentElement.innerHTML='<div class=&quot;preview-empty&quot;><span class=&quot;big&quot;>!</span><b>이미지를 불러오지 못했습니다.</b><p>파일을 다시 업로드해 주세요.</p></div>'">`}else if(d.blobUrl&&(d.type==='application/pdf'||ext==='pdf')){body.innerHTML=`<iframe src="${d.blobUrl}" title="${escapeHtml(d.file)}"></iframe>`}else{body.innerHTML=`<div class="preview-empty"><span class="big">▤</span><b>${escapeHtml(d.file)}</b><p>${d.blobUrl?'이 파일 형식은 브라우저 미리보기를 지원하지 않습니다. 다운로드해서 확인해 주세요.':'등록된 데모 문서입니다. 실제 서버 연결 후 원본 파일 내용이 이 영역에 표시됩니다.'}</p></div>`}document.getElementById('fileModal').classList.remove('hidden')}
+function closePreview(){document.getElementById('fileModal').classList.add('hidden');document.getElementById('previewBody').innerHTML='';currentPreview=null}
+function downloadDocument(group,i){const d=getDoc(group,i);if(!d.blobUrl)return toast('데모 문서입니다. 실제 저장소 연결 후 다운로드됩니다.');const a=document.createElement('a');a.href=d.blobUrl;a.download=d.file;a.click();toast(d.file+' 다운로드 시작')}
+function downloadCurrent(){if(!currentPreview)return;const found=[['docsA',docsA],['docsB',docsB]].find(([,arr])=>arr.includes(currentPreview));if(found)downloadDocument(found[0],found[1].indexOf(currentPreview))}
+function formatBytes(bytes){if(!bytes)return '';if(bytes<1024)return bytes+' B';if(bytes<1048576)return (bytes/1024).toFixed(1)+' KB';return (bytes/1048576).toFixed(1)+' MB'}
+function updateProgress(){const control=document.getElementById('phaseReviewControl');if(control)control.innerHTML=phaseControl(1,true);document.getElementById('authorityCount').textContent=docsA.filter(d=>d.status==='approved').length+' / '+docsA.length+' 승인';const all=[...docsA,...docsB];const done=all.filter(d=>d.status!=='missing').length;const pct=Math.round(done/all.length*100);document.getElementById('progressText').textContent=pct+'%';document.getElementById('progressBar').style.width=pct+'%';document.getElementById('techCount').textContent=docsB.filter(d=>d.status!=='missing').length+' / 5 제출'}
+function sendMessage(){const el=document.getElementById('message');if(!el.value.trim())return toast('메시지를 입력해 주세요.');toast('메시지가 프로젝트 기록에 등록되었습니다.');el.value=''}
+function downloadSummary(){const rows=[['CDSCO Project','AN-CDSCO-2026-014'],['Application','Fresh / COS-1'],['Manufacturer','Ola Beauty Co., Ltd.'],['Indian Agent','Olacorp global'],['Status','Product documents collection'],...([...docsA,...docsB].map(d=>[d.name,labels[d.status][0]+' / '+(d.file||'-')]))];const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='CDSCO_project_status.csv';a.click();URL.revokeObjectURL(a.href);toast('진행현황 CSV 다운로드 완료')}
+const skuRows=[
+ {n:1,line:'AHA.BHA.PHA',name:'30 DAYS MIRACLE TONER',sku:'150ml / 30ml',maker:'reBom Cosmetics',art:1,coa:1,ing:1,cfs:0,note:'일원화 변경 진행 예정'},
+ {n:2,line:'AHA.BHA.PHA',name:'30 DAYS MIRACLE SERUM',sku:'50ml / 10ml',maker:'COSMECCA KOREA',art:1,coa:1,ing:1,cfs:0,note:'일원화 버전 변경 완료'},
+ {n:10,line:'KIT',name:'AHA-BHA-PHA AC S.O.S KIT',sku:'4 components',maker:'복수 제조사',art:1,coa:1,ing:1,cfs:0,note:'구성품별 제조사 연결 필요'},
+ {n:16,line:'YUJA NIACIN',name:'ANTI-BLEMISH DAILY MASK',sku:'30 sheets',maker:'IMINE',art:0,coa:1,ing:1,cfs:0,note:'Artwork 미수령'},
+ {n:21,line:'SNAIL TRUECICA',name:'MIRACLE REPAIR CREAM',sku:'60g / 20g',maker:'Intercos Korea',art:1,coa:1,ing:1,cfs:0,note:'일원화 버전 변경 완료'},
+ {n:30,line:'RETINOL',name:'RETINOL INTENSE ACTIVATING SERUM',sku:'50ml / 30ml / 10ml / 1.5ml',maker:'CNF',art:1,coa:1,ing:1,cfs:0,note:'일원화 버전 변경 완료'},
+ {n:38,line:'MASK PACK',name:'GALACTOMYCES GLOW SERUM MASK',sku:'22g',maker:'IMINE',art:0,coa:1,ing:1,cfs:0,note:'Artwork 미수령'},
+ {n:45,line:'SHEET MASK',name:'REAL SUPER MATCHA PORE CARE MASK',sku:'20g',maker:'ANCORS',art:1,coa:1,ing:1,cfs:0,note:'일원화 변경 진행 예정'},
+ {n:50,line:'GALACTOMYCES',name:'GLUTATHIONE BRIGHTENING CREAM',sku:'40ml',maker:'KOLMAR KOREA',art:1,coa:1,ing:1,cfs:0,note:'일원화 버전 변경 완료'}];
+const makers=['reBom Cosmetics Co., Ltd.','COSMECCA KOREA Co., Ltd.','NOWCOS CO., LTD.','ANCORS Co.,Ltd.','IMINE CO., LTD.','Hankook Cosmetics Manufacturing Co., Ltd.','Intercos Korea Inc.','Kolmar Korea Co., Ltd.'];
+const makerKrMap={'reBom Cosmetics Co., Ltd.':'리봄화장품㈜','COSMECCA KOREA Co., Ltd.':'㈜코스메카코리아','NOWCOS CO., LTD.':'㈜나우코스','ANCORS Co.,Ltd.':'㈜엔코스','IMINE CO., LTD.':'㈜이미인','Hankook Cosmetics Manufacturing Co., Ltd.':'㈜한국화장품제조','Intercos Korea Inc.':'㈜인터코스코리아','Kolmar Korea Co., Ltd.':'한국콜마㈜','복수 제조사':'복수 제조사','CNF':'씨앤에프㈜'};
+skuRows.forEach(r=>{r.owner='somebymi';r.makerEn=r.maker;r.makerKr=makerKrMap[r.maker]||r.maker;r.recommendation=r.makerEn;r.updatedBy='SOME BY MI 담당자';r.updatedAt='2026-08-25'});
+skuRows.push({n:1,line:'HAIR TATTOO',name:'Hair Tattoo Brow',sku:'1.2g',makerKr:'코스메랩',makerEn:'COSMELAB CO., LTD.',recommendation:'COSMELAB CO., LTD.',art:1,coa:1,ing:1,cfs:1,note:'별도 업체 프로젝트',owner:'cosmelab',updatedBy:'코스메랩 담당자',updatedAt:'2026-09-02'});
+let editingSku=null;
+const processPhases=[
+ {phase:'1. 범위 및 비용 확정',range:'1–5단계',steps:[
+  {n:1,task:'전체 SKU 및 제조사 리스트 준비',detail:'CDSCO_Item SKU & Manufacturer List 작성',owner:'고객사',due:'착수',status:'done'},
+  {n:2,task:'브랜드 전용 서류ㅛ 폴더 생성',detail:'드라이브 내 CDSCO 취합 폴더 구성',owner:'올라',due:'착수 +1일',status:'done'},
+  {n:3,task:'Artwork 전달 및 제조사명 입력',detail:'SKU별 아트워크 업로드·제조사 한글/영문명 작성',owner:'고객사',due:'1–2주',status:'done'},
+  {n:4,task:'카테고리·제조사·SKU 수 산정',detail:'정부 수수료 및 Handling Fee 5% 계산',owner:'올라',due:'자료 수령 후',status:'done'},
+  {n:5,task:'실제 진행 SKU 확정',detail:'비용·우선순위를 반영해 최종 List 재정리',owner:'고객사+올라',due:'1주',status:'done'}]},
+ {phase:'2. 서류 취합 및 검토',range:'6–8단계',steps:[
+  {n:6,task:'확정 SKU 기타서류 요청·수령',detail:'INCI, COA, GMP, CFS 취합',owner:'고객사',due:'2–4주',status:'current'},
+  {n:7,task:'인도 측 LOA 준비 요청',detail:'정리된 드라이브 링크를 인도 담당자에게 전달',owner:'올라',due:'서류 취합 후',status:'pending'},
+  {n:8,task:'전체 서류 상호 일치 검토',detail:'제품명·제조사·주소·SKU·카테고리 대조',owner:'올라',due:'LOA 준비 중',status:'pending'}]},
+ {phase:'3. LOA 및 아포스티유',range:'9–12단계',steps:[
+  {n:9,task:'LOA 초안 작성정보·서명 요청',detail:'고객사 작성 영역 하이라이트 및 서명·날인 요청',owner:'고객사+올라',due:'약 1주',status:'pending'},
+  {n:10,task:'Undertaking Letter 작성',detail:'인도 측 작성 후 서명·날인',owner:'인도 측',due:'LOA 병행',status:'pending'},
+  {n:11,task:'LOA·CFS 공증 및 아포스티유',detail:'완료 서류를 고객사에 전달해 원본 인증 진행',owner:'고객사',due:'2–3주',status:'pending'},
+  {n:12,task:'아포스티유 스캔본 전달·포털 접수',detail:'메일 수령 후 인도 측 CDSCO 포털 제출',owner:'올라+인도 측',due:'수령 즉시',status:'pending'}]},
+ {phase:'4. 접수·Query·정부비용',range:'13–14단계',steps:[
+  {n:13,task:'CDSCO Query 대응',detail:'포털 보완요청 추적 및 서류 이슈 즉시 처리',owner:'올라+고객사',due:'접수 후 수시',status:'pending'},
+  {n:14,task:'정부 비용 집행',detail:'포털 명세서 확인 후 승인·납부·영수증 보관',owner:'올라',due:'명세서 발행 후',status:'pending'}]},
+ {phase:'5. 인허가 완료',range:'15단계',steps:[
+  {n:15,task:'CDSCO 인허가 완료',detail:'COS-2 수령·등록정보 확인·최종 파일 보관',owner:'올라+고객사',due:'전체 4–5개월',status:'pending'}]}];
+
+const legacyPhaseStorageKey='olacorp:somebymi:cdsco:completed-phase:v1';
+const phaseStorageKey='olacorp:somebymi:cdsco:completed-steps:v2';
+let completedSteps=new Set([1,2,3,4,5]);
+let completedPhase=1;
+function loadPhaseState(){
+  completedSteps=new Set([1,2,3,4,5]);
+  try{
+    const raw=localStorage.getItem(phaseStorageKey);
+    if(raw!==null){
+      const ids=JSON.parse(raw);
+      if(Array.isArray(ids))ids.filter(n=>Number.isInteger(n)&&n>=6&&n<=15).forEach(n=>completedSteps.add(n));
+    }else{
+      const n=JSON.parse(localStorage.getItem(legacyPhaseStorageKey));
+      if(Number.isInteger(n)&&n>=1&&n<=5)processPhases.slice(0,n).forEach(p=>p.steps.forEach(s=>completedSteps.add(s.n)));
+    }
+  }catch{}
+  syncPhaseStatuses();
+}
+function reviewReady(){return [...docsA,...docsB].every(d=>d.status==='approved'||d.status==='submitted');}
+function phaseControl(index,inner=false){
+  const p=processPhases[index],number=index+1;
+  if(number===1)return '';
+  const count=p.steps.filter(s=>completedSteps.has(s.n)).length;
+  const done=count===p.steps.length,active=number===completedPhase+1;
+  let content=`<span class="pill ${done?'green':'blue'}">세부 업무 ${count} / ${p.steps.length} 완료</span>`;
+  if(number===2&&!done&&active&&currentRole==='admin')content+=`<button class="primary" onclick="completePhase(2)" ${reviewReady()?'':'disabled'}>서류 검토 승인 및 완료</button>`;
+  if(!done)content+=`<small>${currentRole==='admin'?'각 업무의 강제 완료 버튼으로 해당 업무만 완료할 수 있습니다.':'올라 관리자가 세부 업무를 모두 완료하면 다음 단계로 넘어갑니다.'}</small>`;
+  if(done&&number<=completedPhase&&number<5)content+=`<button class="secondary" onclick="goToPhase(${number+1})">다음 단계로 이동 →</button>`;
+  return inner?content:`<div class="phase-control" ${number===2?'id="phaseReviewControl"':''}>${content}</div>`;
+}
+function saveCompletedSteps(next){
+  try{localStorage.setItem(phaseStorageKey,JSON.stringify([...next]));}catch{toast('단계 상태를 저장하지 못했습니다. 브라우저 저장소 설정을 확인해 주세요.');return false;}
+  completedSteps=next;
+  return true;
+}
+function completeStep(number){
+  if(currentRole!=='admin')return toast('완료 처리는 올라 관리자만 가능합니다.');
+  const step=processPhases.flatMap(p=>p.steps).find(s=>s.n===number);
+  if(!step||number<6||completedSteps.has(number))return;
+  const next=new Set(completedSteps);next.add(number);
+  if(!saveCompletedSteps(next))return;
+  renderProcess();
+  toast(step.task+' · 완료 처리되었습니다.');
+}
+function cancelStep(number){
+  if(currentRole!=='admin')return toast('완료 취소는 올라 관리자만 가능합니다.');
+  const step=processPhases.flatMap(p=>p.steps).find(s=>s.n===number);
+  if(!step||number<6||!completedSteps.has(number))return;
+  const next=new Set(completedSteps);next.delete(number);
+  if(!saveCompletedSteps(next))return;
+  renderProcess();
+  toast(step.task+' · 완료가 취소되었습니다.');
+}
+function completePhase(number){
+  if(currentRole!=='admin')return toast('완료 처리는 올라 관리자만 가능합니다.');
+  if(number!==2||completedPhase!==1)return toast('각 세부 업무에서 완료 처리해 주세요.');
+  if(!reviewReady())return toast('필수서류 제출 및 보완 처리를 먼저 완료해 주세요.');
+  const next=new Set(completedSteps);processPhases[1].steps.forEach(s=>next.add(s.n));
+  if(!saveCompletedSteps(next))return;
+  [...docsA,...docsB].forEach(d=>{d.status='approved';});
+  renderProcess();toast('서류 검토 완료 · 3단계를 진행할 수 있습니다.');
+}
+function syncPhaseStatuses(){
+  completedPhase=0;
+  for(const p of processPhases){if(p.steps.every(s=>completedSteps.has(s.n)))completedPhase++;else break;}
+  processPhases.forEach((p,i)=>{
+    const first=p.steps.find(s=>!completedSteps.has(s.n));
+    p.steps.forEach(step=>{step.status=completedSteps.has(step.n)?'done':i===completedPhase&&step===first?'current':'pending';});
+  });
+}
+function goToPhase(number){
+  if(number>completedPhase+1)return toast('이전 단계를 먼저 완료해 주세요.');
+  document.getElementById('phase-'+number)?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderPhaseSummary(){
+  document.getElementById('phaseSteps').innerHTML=processPhases.map((p,i)=>`<div class="step ${i<completedPhase?'done':i===completedPhase?'current':''}" ${i===completedPhase?'aria-current="step"':''}><div class="dot">${i<completedPhase?'✓':i+1}</div>${p.phase}</div>`).join('');
+  document.getElementById('currentPhaseText').textContent=completedPhase===5?'인허가 완료':processPhases[completedPhase].phase;
+  document.getElementById('nextActionText').textContent=completedPhase===5?'COS-2 및 최종 등록서류 확인':processPhases[completedPhase].steps.find(s=>!completedSteps.has(s.n)).task;
+}
+window.addEventListener('storage',event=>{if(event.key===phaseStorageKey||event.key===null){loadPhaseState();renderProcess();}});
+loadPhaseState();
+
+function switchView(view,button){['overview','sku','maker','activity'].forEach(v=>document.getElementById(v+'View').classList.toggle('hidden',v!==view));document.querySelectorAll('.view-tabs button').forEach(b=>b.classList.remove('active'));button.classList.add('active');if(view==='sku')renderSkuTable();if(view==='maker')renderMakers()}
+function renderProcess(){syncPhaseStatuses();document.getElementById('processList').innerHTML=processPhases.map(p=>`<section class="process-phase" id="phase-${processPhases.indexOf(p)+1}"><div class="phase-title"><b>${p.phase}</b><span class="phase-progress">${p.range}</span></div>${phaseControl(processPhases.indexOf(p))}${p.steps.map(s=>`<div class="process-row ${s.status}"><div class="process-no">${s.status==='done'?'✓':s.n}</div><div class="process-task"><b>${s.task}</b><small>${s.detail}</small>${s.status==='current'&&s.n===6?'<div class="gate">현재 완료조건 · INCI·COA·GMP·CFS가 확정 SKU 및 제조사 정보와 일치</div>':''}</div><div class="owner">${s.owner}</div><div class="due">${s.due}</div><div class="process-actions"><span class="pill ${s.status==='done'?'green':s.status==='current'?'blue':'gray'}">${s.status==='done'?'완료':s.status==='current'?'진행 중':'대기'}</span>${currentRole==='admin'&&s.n>=6?`<button class="file-btn step-complete" onclick="${s.status==='done'?'cancelStep':'completeStep'}(${s.n})" aria-label="${escapeHtml(s.task)} ${s.status==='done'?'완료 취소':'강제 완료'}">${s.status==='done'?'완료 취소':'강제 완료'}</button>`:''}</div></div>`).join('')}${p.phase.startsWith('2.')?`<div class="phase-docs"><div class="phase-docs-title">6–8단계 제출서류 관리</div><div class="section-title"><h3>1. 제조사 권한 서류</h3><span class="pill green" id="authorityCount">2 / 2 승인</span></div><div id="docsA"></div><div class="section-title"><h3>2. 제품별 기술 서류</h3><span class="pill amber" id="techCount">2 / 5 제출</span></div><div id="docsB"></div><div class="next-gate"><b>다음 단계 이동조건</b> · 필수서류 승인 및 제품명·제조사·주소·SKU·카테고리 상호 일치 확인 후 LOA 준비 단계로 이동</div></div>`:''}</section>`).join('');render('docsA',docsA);render('docsB',docsB);updateProgress();renderPhaseSummary()}
+function sendActivityMessage(){const el=document.getElementById('activityMessage');const msg=el.value.trim();if(!msg)return toast('등록할 내용을 입력해 주세요.');const event=document.createElement('div');event.className='event';event.innerHTML=`<b>프로젝트 메시지 등록</b><p>방금 전 · ${currentRole==='admin'?'올라 관리자':'SOME BY MI 담당자'}</p><div class="comment">${escapeHtml(msg)}</div>`;document.getElementById('activityHistory').prepend(event);el.value='';toast('활동 이력에 등록되었습니다.')}
+function statusCell(ok){return `<span class="check ${ok?'yes':'no'}">${ok?'✓':'!'}</span>`}
+function renderSkuTable(){const q=(document.getElementById('skuSearch')?.value||'').toLowerCase();const f=document.getElementById('skuFilter')?.value||'all';const rows=skuRows.filter(r=>currentRole==='admin'||r.owner==='somebymi').filter(r=>[r.line,r.name,r.makerKr,r.makerEn,r.recommendation].join(' ').toLowerCase().includes(q)).filter(r=>f==='all'||(f==='blocked'&&(!r.art||!r.coa||!r.ing||!r.cfs))||(f==='art'&&!r.art)||(f==='cfs'&&!r.cfs));document.getElementById('skuTableBody').innerHTML=rows.map(r=>`<tr><td>${r.n}${currentRole==='admin'?`<span class="owner-tag">${r.owner==='somebymi'?'SOME BY MI':'COSMELAB'}</span>`:''}</td><td><b>${escapeHtml(r.line)}</b></td><td class="product"><b>${escapeHtml(r.name)}</b><br><small>${escapeHtml(r.sku)}</small></td><td>${escapeHtml(r.makerKr||'미입력')}</td><td>${escapeHtml(r.makerEn||'미입력')}</td><td>${escapeHtml(r.recommendation||'미입력')}</td><td>${statusCell(r.art)}</td><td>${statusCell(r.coa)}</td><td>${statusCell(r.ing)}</td><td>${statusCell(r.cfs)}</td><td>${escapeHtml(r.note||'-')}</td><td><button class="file-btn view" onclick="openSkuEdit('${r.owner}',${r.n})">입력·수정</button></td></tr>`).join('')||'<tr><td colspan="12" style="text-align:center;color:#718096;padding:32px">조건에 맞는 SKU가 없습니다.</td></tr>'}
+function renderMakers(){const own=makers.map((m,i)=>({name:m,owner:'somebymi',state:i<3?'요청 중':'미요청'}));if(currentRole==='admin')own.push({name:'COSMELAB CO., LTD.',owner:'cosmelab',state:'수령 완료'});document.getElementById('makerGrid').innerHTML=own.map((m,i)=>`<div class="maker-card"><h3>${escapeHtml(m.name)}</h3>${currentRole==='admin'?`<span class="owner-tag">업체 · ${m.owner==='somebymi'?'SOME BY MI':'COSMELAB'}</span>`:''}<div class="maker-docs"><span class="pill green">CGMP 승인</span><span class="pill green">ISO 승인</span><span class="pill ${m.state==='수령 완료'?'green':m.state==='요청 중'?'amber':'gray'}">CFS ${m.state}</span></div><div style="margin-top:12px"><button class="file-btn view" onclick="toast('${escapeHtml(m.name)} 서류함 열기')">서류함 보기</button></div></div>`).join('')}
+const skuStorageKey='olacorp:cdsco:sku-edits:v1';
+const skuEditFields={line:'editLine',name:'editName',sku:'editSku',makerKr:'editMakerKr',makerEn:'editMakerEn',recommendation:'editRecommendation',note:'editNote',art:'editArt',coa:'editCoa',ing:'editIng',cfs:'editCfs'};
+const skuStatusFields=['art','coa','ing','cfs'];
+function loadSkuEdits(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(skuStorageKey)||'[]');
+    if(!Array.isArray(saved))return;
+    saved.forEach(entry=>{
+      if(!entry||typeof entry!=='object')return;
+      const row=skuRows.find(r=>r.owner===entry.owner&&r.n===entry.n);if(!row)return;
+      [...Object.keys(skuEditFields),'updatedBy','updatedAt'].forEach(key=>{
+        if(skuStatusFields.includes(key)?[0,1].includes(entry[key]):typeof entry[key]==='string')row[key]=entry[key];
+      });
+    });
+  }catch{}
+}
+function canEditSku(row){return row&&(currentRole==='admin'||row.owner==='somebymi');}
+function openSkuEdit(owner,n){
+  const row=skuRows.find(r=>r.owner===owner&&r.n===n);
+  if(!canEditSku(row))return toast('수정 권한이 없는 SKU입니다.');
+  editingSku=row;
+  document.getElementById('skuEditTitle').textContent=row.name;
+  Object.entries(skuEditFields).forEach(([key,id])=>{const el=document.getElementById(id);el.value=String(row[key]??'');el.readOnly=false;});
+  document.getElementById('skuAudit').textContent=`최종 수정 · ${row.updatedAt||'-'} · ${row.updatedBy||'-'}`;
+  document.getElementById('skuSaveButton').classList.remove('hidden');
+  document.getElementById('skuEditModal').classList.remove('hidden');
+}
+function closeSkuEdit(){document.getElementById('skuEditModal').classList.add('hidden');editingSku=null}
+function saveSkuEdit(){
+  if(!canEditSku(editingSku))return toast('수정 권한이 없는 SKU입니다.');
+  const next={...editingSku};
+  for(const [key,id] of Object.entries(skuEditFields)){
+    const value=document.getElementById(id).value.trim();
+    if(skuStatusFields.includes(key)){
+      if(!['0','1'].includes(value))return toast('서류 상태를 선택해 주세요.');
+      next[key]=Number(value);
+    }else next[key]=value;
+  }
+  if(!next.name||!next.sku)return toast('제품명과 용량 / SKU를 입력해 주세요.');
+  next.updatedBy=currentRole==='admin'?'올라 관리자':'SOME BY MI 담당자';
+  next.updatedAt=new Date().toLocaleString('ko-KR');
+  try{
+    const rows=skuRows.map(r=>r===editingSku?next:r);
+    localStorage.setItem(skuStorageKey,JSON.stringify(rows));
+  }catch{return toast('저장하지 못했습니다. 브라우저 저장소 설정을 확인해 주세요.');}
+  Object.assign(editingSku,next);closeSkuEdit();renderSkuTable();toast('SKU 정보와 서류 상태가 저장되었습니다.');
+}
+loadSkuEdits();
+window.addEventListener('storage',event=>{if(event.key===skuStorageKey){loadSkuEdits();renderSkuTable();}});
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+renderProcess();updateProgress();renderSkuTable();renderMakers();
+</script>
+</body></html>
