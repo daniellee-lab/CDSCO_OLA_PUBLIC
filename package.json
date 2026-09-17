@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "supabase": "2.117.0"
+  },
+  "name": "cdsco-desk",
+  "private": true,
+  "scripts": {
+    "test": "node --check membership.js && node --check operations.js && node tests/membership.test.cjs && node tests/operations.test.cjs && node tests/database.test.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
